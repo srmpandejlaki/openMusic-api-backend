@@ -5,26 +5,20 @@ class AlbumService {
     this._albums = [];
   }
 
-  addAlbum({ request, h }) {
-    const { name, year } = request.payload;
+  addAlbum({ name, year }) {
     const id = nanoid(16);
 
-    const newAlbum = {
-      id, name, year,
-    };
+    const newAlbum = { id, name, year };
 
     this._albums.push(newAlbum);
 
     const isSuccess = this._albums.filter((album) => album.id === id).length > 0;
 
     if (!isSuccess) {
-      const response = h.response({
-        status: 'fail',
-        message: 'Gagal menambahkan album',
-      });
-      response.code(400);
-      return response;
+      throw new Error('Album gagal ditambahkan');
     }
+
+    return id;
   }
 
   getAlbums() {
@@ -34,12 +28,7 @@ class AlbumService {
   getAlbumById(id) {
     const album = this._albums.filter((n) => n.id === id)[0];
     if (!album) {
-      const response = h.response({
-        status: 'fail',
-        message: 'Album tidak ditemukan',
-      });
-      response.code(404);
-      return response;
+      throw new Error('Album tidak ditemukan');
     }
   }
 
@@ -47,12 +36,7 @@ class AlbumService {
     const index = this._albums.findIndex((album) => album.id === id);
 
     if (index === -1) {
-      const response = h.response({
-        status: 'fail',
-        message: 'Gagal memperbarui album. Id tidak ditemukan',
-      });
-      response.code(404);
-      return response;
+      throw new Error('Gagal memperbarui album. Id tidak ditemukan');
     }
 
     this._albums[index] = {
@@ -65,12 +49,7 @@ class AlbumService {
     const index = this._albums.findIndex((album) => album.id === id);
 
     if (index === -1) {
-      const response = h.response({
-        status: 'fail',
-        message: 'Gagal menghapus album. Id tidak ditemukan',
-      });
-      response.code(404);
-      return response;
+      throw new Error('Album gagal dihapus. Id tidak ditemukan');
     }
 
     this._albums.splice(index, 1);
