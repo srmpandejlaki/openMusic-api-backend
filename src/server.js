@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const Hapi = require('@hapi/hapi');
 
 const albums = require('./api/album/routes');

@@ -1,4 +1,4 @@
-const { nanoid } = raquire('nanoid');
+const { nanoid } = require('nanoid');
 
 class AlbumService {
   constructor() {
