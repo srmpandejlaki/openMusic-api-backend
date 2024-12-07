@@ -26,5 +26,45 @@ class AlbumService {
 
     return id;
   }
+
+  getAlbum() {
+    return this._album;
+  }
+
+  getAlbumById(id) {
+    const album = this._album.filter((n) => n.id === id)[0];
+    if (!album) {
+      throw new Error('Album tidak ditemukan');
+    }
+    return album;
+  }
+
+  editAlbumById(id, { title, body, tags }) {
+    const index = this._album.findIndex((album) => album.id === id);
+
+    if (index === -1) {
+      throw new Error('GAGAL MEMPERBARUI CATATAN. ID TIDAK DITEMUKAN');
+    }
+
+    const update = new Date().toISOString();
+
+    this._album[index] = {
+      ...this._album[index],
+      title,
+      tags,
+      body,
+      update,
+    };
+  }
+
+  deleteAlbumById(id) {
+    const index = this._album.findIndex((album) => album.id === id);
+
+    if (index === -1) {
+      throw new Error('GAGAL MEMPERBARUI CATATAN. ID TIDAK DITEMUKAN');
+    }
+
+    this._album.splice(index, 1);
+  }
 }
 module.exports = AlbumService;
