@@ -1,7 +1,4 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable eol-last */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable linebreak-style */
 const { nanoid } = require('nanoid');
 
 class AlbumService {
