@@ -9,11 +9,11 @@ class AlbumService {
     this._album = [];
   }
 
-  addAlbum({ title, body, tags }) {
+  addAlbum({ name, year }) {
     const id = nanoid(16);
 
     const newAlbum = {
-      title, tags, body, id,
+      name, year, id,
     };
 
     this._album.push(newAlbum);
@@ -39,20 +39,19 @@ class AlbumService {
     return album;
   }
 
-  editAlbumById(id, { title, body, tags }) {
+  editAlbumById(id, { name, year }) {
     const index = this._album.findIndex((album) => album.id === id);
 
     if (index === -1) {
-      throw new Error('GAGAL MEMPERBARUI CATATAN. ID TIDAK DITEMUKAN');
+      throw new Error('Gagal mengubah album. Id tidak ditemukan');
     }
 
     const update = new Date().toISOString();
 
     this._album[index] = {
       ...this._album[index],
-      title,
-      tags,
-      body,
+      name,
+      year,
       update,
     };
   }
@@ -61,7 +60,7 @@ class AlbumService {
     const index = this._album.findIndex((album) => album.id === id);
 
     if (index === -1) {
-      throw new Error('GAGAL MEMPERBARUI CATATAN. ID TIDAK DITEMUKAN');
+      throw new Error('Gagal menghapus album. Id tidak ditemukan');
     }
 
     this._album.splice(index, 1);
