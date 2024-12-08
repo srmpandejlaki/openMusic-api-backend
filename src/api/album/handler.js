@@ -1,7 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 class AlbumHandler {
-  constructor(service) {
+  constructor(service, validator) {
     this._service = service;
+    this._validator = validator;
 
     this.postAlbumHandler = this.postAlbumHandler.bind(this);
     this.getAlbumHandler = this.getAlbumHandler.bind(this);
@@ -12,6 +13,7 @@ class AlbumHandler {
 
   postAlbumHandler(request, h) {
     try {
+      this._validator.validateAlbumPayLoad(request.payload);
       const { name = 'untitled', year } = request.payload;
 
       const albumId = this._service.addAlbum({ name, year });
@@ -67,6 +69,7 @@ class AlbumHandler {
 
   putAlbumByIdHandler(request, h) {
     try {
+      this._validator.validateAlbumPayLoad(request.payload);
       const { id } = request.params;
 
       this._service.editAlbumById(id, request.payload);
