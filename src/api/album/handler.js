@@ -7,11 +7,11 @@ class AlbumHandler {
     this._service = service;
     this._validator = validator;
 
-    this.postAlbumHandler = this.postAlbumHandler(this);
-    this.getAlbumHandler = this.getAlbumHandler(this);
-    this.getAlbumByIdHandler = this.getAlbumByIdHandler(this);
-    this.putAlbumByIdHandler = this.putAlbumByIdHandler(this);
-    this.deleteAlbumByIdHandler = this.deleteAlbumByIdHandler(this);
+    this.postAlbumHandler = this.postAlbumHandler.bind(this);
+    this.getAlbumHandler = this.getAlbumHandler.bind(this);
+    this.getAlbumByIdHandler = this.getAlbumByIdHandler.bind(this);
+    this.putAlbumByIdHandler = this.putAlbumByIdHandler.bind(this);
+    this.deleteAlbumByIdHandler = this.deleteAlbumByIdHandler.bind(this);
 
     autoBind(this);
   }
