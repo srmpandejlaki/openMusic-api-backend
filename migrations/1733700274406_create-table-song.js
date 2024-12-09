@@ -19,7 +19,7 @@ exports.up = (pgm) => {
       notNull: true,
     },
     year: {
-      type: 'INT',
+      type: 'INTEGER',
       notNull: true,
     },
     genre: {
@@ -31,7 +31,7 @@ exports.up = (pgm) => {
       notNull: false,
     },
     duration: {
-      type: 'INT',
+      type: 'INTEGER',
       notNull: false,
     },
   });
