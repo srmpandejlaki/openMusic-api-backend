@@ -2,10 +2,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { Pool } = require('pg');
 const { nanoid } = require('nanoid');
-const { mapAlbumDBToModel } = require('../../utils');
+const { mapAlbumDBToModel } = require('../../utils/utils');
 const InvariantError = require('../../exceptions/InvariantError');
+const NotFoundError = require('../../exceptions/NotFoundError');
 
-class AlbumPostgres {
+class AlbumService {
   constructor() {
     this._pool = new Pool();
   }
@@ -21,7 +22,7 @@ class AlbumPostgres {
     const result = await this._pool.query(query);
 
     if (!result.rows[0].id) {
-      throw new InvariantError('Catatan gagal ditambahkan');
+      throw new InvariantError('Album gagal ditambahkan');
     }
 
     return result.rows[0].id;
@@ -38,11 +39,11 @@ class AlbumPostgres {
       values: [id],
     };
     const result = await this._pool.query(query);
- 
+
     if (!result.rows.length) {
-      throw new NotFoundError('Catatan tidak ditemukan');
+      throw new NotFoundError('Album tidak ditemukan');
     }
- 
+
     return result.rows.map(mapAlbumDBToModel)[0];
   }
 
@@ -57,7 +58,22 @@ class AlbumPostgres {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new NotFoundError('Gagal memperbarui catatan. Id tidak ditemukan');
+      throw new NotFoundError('Gagal memperbarui album. Id tidak ditemukan');
+    }
+  }
+
+  async deleteAlbumById(id) {
+    const query = {
+      text: 'DELETE FROM albums WHERE id = $1 RETURNING id',
+      values: [id],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rows.length) {
+      throw new NotFoundError('Album gagal dihapus. Id tidak ditemukan');
     }
   }
 }
+
+module.exports = AlbumService;

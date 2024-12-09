@@ -5,8 +5,8 @@ const Hapi = require('@hapi/hapi');
 
 const album = require('./api/album');
 const song = require('./api/song');
-const AlbumService = require('./services/inMemory/AlbumService');
-const SongService = require('./services/inMemory/SongService');
+const AlbumService = require('./services/postgres/AlbumService');
+const SongService = require('./services/postgres/SongService');
 
 const AlbumValidator = require('./validator/album');
 const SongValidator = require('./validator/song');

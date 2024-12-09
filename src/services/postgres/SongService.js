@@ -2,10 +2,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { Pool } = require('pg');
 const { nanoid } = require('nanoid');
-const { mapSongDBToModel } = require('../../utils');
+const { mapSongDBToModel } = require('../../utils/utils');
 const InvariantError = require('../../exceptions/InvariantError');
+const NotFoundError = require('../../exceptions/NotFoundError');
 
-class SongPostgres {
+class SongService {
   constructor() {
     this._pool = new Pool();
   }
@@ -23,7 +24,7 @@ class SongPostgres {
     const result = await this._pool.query(query);
 
     if (!result.rows[0].id) {
-      throw new InvariantError('Catatan gagal ditambahkan');
+      throw new InvariantError('Lagu gagal ditambahkan');
     }
 
     return result.rows[0].id;
@@ -40,11 +41,11 @@ class SongPostgres {
       values: [id],
     };
     const result = await this._pool.query(query);
- 
+
     if (!result.rows.length) {
-      throw new NotFoundError('Catatan tidak ditemukan');
+      throw new NotFoundError('Lagu tidak ditemukan');
     }
- 
+
     return result.rows.map(mapSongDBToModel)[0];
   }
 
@@ -59,7 +60,22 @@ class SongPostgres {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new NotFoundError('Gagal memperbarui catatan. Id tidak ditemukan');
+      throw new NotFoundError('Gagal memperbarui lagu. Id tidak ditemukan');
+    }
+  }
+
+  async deleteSongById(id) {
+    const query = {
+      text: 'DELETE FROM songs WHERE id = $1 RETURNING id',
+      values: [id],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rows.length) {
+      throw new NotFoundError('Lagu gagal dihapus. Id tidak ditemukan');
     }
   }
 }
+
+module.exports = SongService;
