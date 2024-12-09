@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable import/no-extraneous-dependencies */
 const { Pool } = require('pg');
 const { nanoid } = require('nanoid');
 const { mapAlbumDBToModel } = require('../../utils/utils');
@@ -29,7 +28,7 @@ class AlbumService {
   }
 
   async getAlbum() {
-    const result = await this._pool.query('SELECT * FROM notes');
+    const result = await this._pool.query('SELECT * FROM albums');
     return result.rows.map(mapAlbumDBToModel);
   }
 
