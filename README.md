@@ -19,17 +19,17 @@ API harus menyediakan endpoint untuk pengelolaan album dengan spesifikasi beriku
 
 Untuk lebih jelasnya, berikut adalah struktur response body yang harus ditampilkan pada endpoint:
 
-GET /albums/{id}
-{
-  "status": "success",
-  "data": {
-    "album": {
-      "id": "album-Mk8AnmCp210PwT6B",
-      "name": "Viva la Vida",
-      "year": 2008
-    }
-  }
-}
+GET /albums/{id} <br>
+{ <br>
+  "status": "success", <br>
+  "data": { <br>
+    "album": { <br>
+      "id": "album-Mk8AnmCp210PwT6B", <br>
+      "name": "Viva la Vida", <br>
+      "year": 2008 <br>
+    } <br>
+  } <br>
+} <br>
 
 
 ##Kriteria 3 : Pengelolaan Data Song
