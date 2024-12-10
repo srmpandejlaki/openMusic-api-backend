@@ -82,61 +82,61 @@ GET /songs/{id}
 
 
 Objek song yang disimpan harus memiliki struktur seperti contoh di bawah ini:
-{
-  "id": "song-Qbax5Oy7L8WKf74l",
-  "title": "Life in Technicolor",
-  "year": 2008,
-  "performer": "Coldplay",
-  "genre": "Indie",
-  "duration": 120,
-  "albumId": "album-Mk8AnmCp210PwT6B"
+{ <br>
+  "id": "song-Qbax5Oy7L8WKf74l", <br>
+  "title": "Life in Technicolor", <br>
+  "year": 2008, <br>
+  "performer": "Coldplay", <br>
+  "genre": "Indie", <br>
+  "duration": 120, <br>
+  "albumId": "album-Mk8AnmCp210PwT6B" <br>
 }
 
 
 ## Kriteria 4 : Menerapkan Data Validation
-Wajib menerapkan proses Data Validation pada Request Payload sesuai spesifikasi berikut:
+Wajib menerapkan proses Data Validation pada Request Payload sesuai spesifikasi berikut: <br>
 
-POST /albums
-name : string, required.
-year : number, required.
+POST /albums <br>
+name : string, required. <br>
+year : number, required. <br>
 
-PUT /albums
-name : string, required.
-year : number, required.
+PUT /albums <br>
+name : string, required. <br>
+year : number, required. <br>
 
-POST /songs
-title : string, required.
-year : number, required.
-genre : string, required.
-performer : string, required.
-duration : number.
-albumId: string.
+POST /songs <br>
+title : string, required. <br>
+year : number, required. <br>
+genre : string, required. <br>
+performer : string, required. <br>
+duration : number. <br>
+albumId: string. <br>
 
-PUT /songs
-title : string, required.
-year : number, required.
-genre : string, required.
-performer : string, required.
-duration : number.
-albumId : string.
+PUT /songs <br>
+title : string, required. <br>
+year : number, required. <br>
+genre : string, required. <br>
+performer : string, required. <br>
+duration : number. <br>
+albumId : string. <br>
 
 
 ## Kriteria 5 : Penanganan Eror (Error Handling)
-Ketika proses validasi data pada request payload tidak sesuai (gagal), server harus mengembalikan response:
-  status code: 400 (Bad Request)
-  response body: 
-   status: fail
-   message: <apa pun selama tidak kosong>
-Ketika pengguna mengakses resource yang tidak ditemukan, server harus mengembalikan response:
-  status code: 404 (Not Found)
-  response body:
-   status: fail
-   message: <apa pun selama tidak kosong>
-Ketika terjadi server eror, server harus mengembalikan response:
-  status code: 500 (Internal Server Error)
-  response body:
-   status: error
-   message: <apa pun selama tidak kosong>
+Ketika proses validasi data pada request payload tidak sesuai (gagal), server harus mengembalikan response: <br>
+  status code: 400 (Bad Request) <br>
+  response body:  <br>
+   status: fail <br>
+   message: <apa pun selama tidak kosong> <br>
+Ketika pengguna mengakses resource yang tidak ditemukan, server harus mengembalikan response: <br>
+  status code: 404 (Not Found) <br>
+  response body: <br>
+   status: fail <br>
+   message: <apa pun selama tidak kosong> <br>
+Ketika terjadi server eror, server harus mengembalikan response: <br>
+  status code: 500 (Internal Server Error) <br>
+  response body: <br>
+   status: error <br>
+   message: <apa pun selama tidak kosong> <br>
 
 
 ## Kriteria 6 : Menggunakan Database dalam Menyimpan Data album dan lagu
