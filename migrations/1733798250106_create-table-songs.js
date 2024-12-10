@@ -34,6 +34,10 @@ exports.up = (pgm) => {
       type: 'INTEGER',
       notNull: false,
     },
+    album_id: {
+      type: ' varchar(50)',
+      notNull: false,
+    },
   });
 };
 
