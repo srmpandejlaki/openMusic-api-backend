@@ -140,16 +140,16 @@ Ketika terjadi server eror, server harus mengembalikan response: <br>
 
 
 ## Kriteria 6 : Menggunakan Database dalam Menyimpan Data album dan lagu
-Data lagu harus disimpan di dalam database menggunakan PostgreSQL agar ketika di-restart data tidak akan hilang.
-Wajib menggunakan teknik migrations dengan package node-pg-migrate dalam mengelola struktur tabel pada database.
-Kami mengedepankan penggunaan SQL dalam mengelola database, jika Anda menggunakan ORM, submission akan ditolak.
-Wajib menyimpan nilai host, post, maupun kredensial dalam mengakses database pada environment variable dengan ketentuan:
+Data lagu harus disimpan di dalam database menggunakan PostgreSQL agar ketika di-restart data tidak akan hilang. <br>
+Wajib menggunakan teknik migrations dengan package node-pg-migrate dalam mengelola struktur tabel pada database. <br>
+Kami mengedepankan penggunaan SQL dalam mengelola database, jika Anda menggunakan ORM, submission akan ditolak. <br>
+Wajib menyimpan nilai host, post, maupun kredensial dalam mengakses database pada environment variable dengan ketentuan: <br>
 
-PGUSER : menyimpan nilai user untuk mengakses database.
-PGPASSWORD : menyimpan nilai password dari user database.
-PGDATABASE : menyimpan nilai nama database yang digunakan.
-PGHOST : menyimpan nilai host yang digunakan oleh database.
-PGPORT :  menyimpan nilai port yang digunakan oleh database.
+PGUSER : menyimpan nilai user untuk mengakses database. <br>
+PGPASSWORD : menyimpan nilai password dari user database. <br>
+PGDATABASE : menyimpan nilai nama database yang digunakan. <br>
+PGHOST : menyimpan nilai host yang digunakan oleh database. <br>
+PGPORT :  menyimpan nilai port yang digunakan oleh database. <br>
 
 Wajib menggunakan package dotenv serta berkas .env dalam mengelola environment variable.
 
@@ -158,41 +158,49 @@ Wajib menggunakan package dotenv serta berkas .env dalam mengelola environment v
 Selain kriteria utama, terdapat kriteria opsional yang yang dapat Anda penuhi agar mendapat nilai yang baik.
 
 ## Kriteria Opsional 1: Memunculkan daftar lagu di dalam detail album
-API harus memunculkan daftar lagu di dalam album pada endpoint GET /albums/{albumId}. Berikut contoh response yang harus dihasilkan:
+API harus memunculkan daftar lagu di dalam album pada endpoint GET /albums/{albumId}. Berikut contoh response yang harus dihasilkan: <br>
 
-{
-  "status": "success",
-  "data": {
-    "album": {
-      "id": "album-Mk8AnmCp210PwT6B",
-      "name": "Viva la Vida",
-      "year": 2008,
-      "songs": [
-        {
-          "id": "song-Qbax5Oy7L8WKf74l",
-          "title": "Life in Technicolor",
-          "performer": "Coldplay"
-        },
-        {
-          "id": "song-poax5Oy7L8WKllqw",
-          "title": "Centimeteries of London",
-          "performer": "Coldplay"
-        },
-        {
-          "id": "song-Qalokam7L8WKf74l",
-          "title": "Lost!",
-          "performer": "Coldplay"
-        }
-      ]
-    }
-  }
-}
+{ <br>
+  "status": "success", <br>
+  "data": { <br>
+    "album": { <br>
+      "id": "album-Mk8AnmCp210PwT6B", <br>
+      "name": "Viva la Vida", <br>
+      "year": 2008, <br>
+      "songs": [ <br>
+        { <br>
+          "id": "song-Qbax5Oy7L8WKf74l", <br>
+          "title": "Life in Technicolor", <br>
+          "performer": "Coldplay" <br>
+        }, <br>
+        { <br>
+          "id": "song-poax5Oy7L8WKllqw", <br>
+          "title": "Centimeteries of London", <br>
+          "performer": "Coldplay" <br>
+        }, <br>
+        { <br>
+          "id": "song-Qalokam7L8WKf74l", <br>
+          "title": "Lost!", <br>
+          "performer": "Coldplay" <br>
+        } <br>
+      ] <br>
+    } <br>
+  } <br>
+} <br>
 
 
 ## Kriteria Opsional 2: Query Parameter untuk Pencarian Lagu
-Menerapkan query parameter pada endpoint GET /songs untuk fitur pencarian lagu. Berikut ketentuan parameternya:
+Menerapkan query parameter pada endpoint GET /songs untuk fitur pencarian lagu. Berikut ketentuan parameternya: <br>
 
-?title: mencari lagu berdasarkan judul lagu.
-?performer: mencari lagu berdasarkan performer.
+?title: mencari lagu berdasarkan judul lagu. <br>
+?performer: mencari lagu berdasarkan performer. <br>
 
-Catatan: Penggunaan kedua parameter tersebut dapat dikombinasikan.
+Catatan: Penggunaan kedua parameter tersebut dapat dikombinasikan. <br>
+
+# Saran
+Memenuhi kriteria opsional yang diberikan. <br>
+Menggunakan ESLint dan salah satu style guide agar gaya penulisan kode JavaScript lebih konsisten dan menghindari disable linter yang tidak diperlukan. <br>
+Menuliskan kode dengan bersih: <br>
+Menghapus kode yang redundan (tidak perlu). <br>
+Menghapus impor kode yang tidak digunakan. <br>
+Menghapus berkas yang tidak digunakan.
