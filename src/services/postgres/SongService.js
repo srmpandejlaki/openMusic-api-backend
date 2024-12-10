@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-underscore-dangle */
 const { Pool } = require('pg');
 const { nanoid } = require('nanoid');
@@ -11,13 +12,14 @@ class SongService {
   }
 
   async addSong({
-    title, year, genre, performer, duration, albumId,
+    title, year, performer, genre, duration, albumId,
   }) {
     const id = `song-${nanoid(16)}`;
+    const album_id = albumId;
 
     const query = {
       text: 'INSERT INTO songs VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id',
-      values: [id, title, year, genre, performer, duration, albumId],
+      values: [id, title, year, performer, genre, duration, album_id],
     };
 
     const result = await this._pool.query(query);
@@ -31,7 +33,7 @@ class SongService {
 
   async getSong(title = '', performer = '') {
     const query = {
-      text: 'SELECT id, title, performer FROM songs WHERE title ILIKE $1 AND performer ILIKE $2',
+      text: 'SELECT id, title, performer FROM songs WHERE title ILIKE $1 and performer ILIKE $2',
       values: [`%${title}%`, `%${performer}%`],
     };
     const { rows } = await this._pool.query(query);
