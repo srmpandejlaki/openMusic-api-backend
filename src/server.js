@@ -1,22 +1,28 @@
 /* eslint-disable no-undef */
 require('dotenv').config();
 const Hapi = require('@hapi/hapi');
+const Jwt = require('@hapi/jwt');
 const ClientError = require('./exceptions/ClientError');
 
 const album = require('./api/album');
 const song = require('./api/song');
-const users = require('./api/user');
+const user = require('./api/user');
+const authentication = require('./api/authentication');
 const AlbumService = require('./services/postgres/AlbumService');
 const SongService = require('./services/postgres/SongService');
-const UsersService = require('./services/postgres/UserService');
+const UserService = require('./services/postgres/UserService');
+const AuthenticationService = require('./services/postgres/AuthenticationService');
 const AlbumValidator = require('./validator/album');
 const SongValidator = require('./validator/song');
 const UserValidator = require('./validator/user');
+const AuthenticationValidator = require('./validator/authentication');
+const TokenManager = require('./token/tokenManager');
 
 const init = async () => {
   const albumServices = new AlbumService();
   const songServices = new SongService();
-  const userServices = new UsersService();
+  const userServices = new UserService();
+  const authenticationServices = new AuthenticationService();
   const server = Hapi.server({
     port: process.env.PORT,
     host: process.env.HOST,
@@ -25,6 +31,28 @@ const init = async () => {
         origin: ['*'],
       },
     },
+  });
+
+  await server.register([
+    {
+      plugin: Jwt,
+    },
+  ]);
+
+  server.auth.strategy('openmusic_jwt', 'jwt', {
+    keys: process.env.ACCESS_TOKEN_KEY,
+    verify: {
+      aud: false,
+      iss: false,
+      sub: false,
+      maxAgeSec: process.env.ACCESS_TOKEN_AGE,
+    },
+    validate: (artifacts) => ({
+      isValid: true,
+      credentials: {
+        id: artifacts.decoded.payload.id,
+      },
+    }),
   });
 
   await server.register([
@@ -43,10 +71,19 @@ const init = async () => {
       },
     },
     {
-      plugin: users,
+      plugin: user,
       options: {
         service: userServices,
         validator: UserValidator,
+      },
+    },
+    {
+      plugin: authentication,
+      options: {
+        authenticationServices,
+        userServices,
+        tokenManager: TokenManager,
+        validator: AuthenticationValidator,
       },
     },
   ]);
