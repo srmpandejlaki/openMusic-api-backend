@@ -28,7 +28,7 @@ exports.up = (pgm) => {
     },
     performer: {
       type: 'TEXT',
-      notNull: false,
+      notNull: true,
     },
     duration: {
       type: 'INTEGER',

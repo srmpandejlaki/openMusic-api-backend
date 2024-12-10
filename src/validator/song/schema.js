@@ -2,9 +2,13 @@
 const Joi = require('joi');
 
 const SongPayLoadSchema = Joi.object({
-  name: Joi.string().required(),
-  year: Joi.number().integer().min(1800).max(new Date().getFullYear())
+  title: Joi.string().required(),
+  year: Joi.number().integer().min(2000).max(new Date().getFullYear())
     .required(),
+  genre: Joi.string().required(),
+  performer: Joi.string().required(),
+  duration: Joi.number(),
+  albumId: Joi.string(),
 });
 
 module.exports = { SongPayLoadSchema };
