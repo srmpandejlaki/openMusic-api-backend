@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 require('dotenv').config();
 const Hapi = require('@hapi/hapi');
+const ClientError = require('./exceptions/ClientError');
 
 const album = require('./api/album');
 const song = require('./api/song');

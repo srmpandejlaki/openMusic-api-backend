@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 const autoBind = require('auto-bind');
 
@@ -6,25 +5,13 @@ class SongHandler {
   constructor(service, validator) {
     this._service = service;
     this._validator = validator;
-
-    this.postSongHandler = this.postSongHandler.bind(this);
-    this.getSongHandler = this.getSongHandler.bind(this);
-    this.getSongByIdHandler = this.getSongByIdHandler.bind(this);
-    this.putSongByIdHandler = this.putSongByIdHandler.bind(this);
-    this.deleteSongByIdHandler = this.deleteSongByIdHandler.bind(this);
-
     autoBind(this);
   }
 
   async postSongHandler(request, h) {
     this._validator.validateAlbumPayLoad(request.payload);
-    const {
-      title = 'untitled', year, genre = 'untitled', performer = 'untitled', duration = 'untitled',
-    } = request.payload;
 
-    const songId = await this._service.addSong({
-      title, year, genre, performer, duration,
-    });
+    const songId = await this._service.addSong(request.playload);
 
     const response = h.response({
       status: 'success',
