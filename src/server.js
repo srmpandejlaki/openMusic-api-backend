@@ -47,6 +47,7 @@ const init = async () => {
       sub: false,
       maxAgeSec: process.env.ACCESS_TOKEN_AGE,
     },
+
     validate: (artifacts) => ({
       isValid: true,
       credentials: {
