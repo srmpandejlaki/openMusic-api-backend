@@ -37,6 +37,21 @@ class PlaylistService {
     return result.rows.map(mapPlaylistDBToModel);
   }
 
+  async deletePlaylistById(id) {
+    const query = {
+      text: 'DELETE FROM playlists WHERE id = $1 RETURNING id',
+      values: [id],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rows[0].id) {
+      throw new NotFoundError('Playlist gagal dihapus');
+    }
+
+    return result.rows[0].id;
+  }
+
   async verifyPlaylistOwner(id, owner) {
     const query = {
       text: 'SELECT * FROM playlists WHERE id = $1',
@@ -62,19 +77,26 @@ class PlaylistService {
     }
   }
 
-  async deletePlaylistById(id) {
-    const query = {
-      text: 'DELETE FROM playlists WHERE id = $1 RETURNING id',
-      values: [id],
+  async addSongToPlaylist(playlistId, songId) {
+    const songQuery = {
+      text: 'SELECT * FROM songs WHERE id = $1',
+      values: [songId],
     };
 
-    const result = await this._pool.query(query);
+    const result = await this._pool.query(songQuery);
 
-    if (!result.rows[0].id) {
-      throw new NotFoundError('Playlist gagal dihapus');
+    if (!result.rows.length) {
+      throw new NotFoundError('Lagu gagal ditambahkan');
     }
 
-    return result.rows[0].id;
+    const id = `playlist-songs-${nanoid(16)}`;
+
+    const query = {
+      text: 'INSERT INTO playlist_songs (id, playlist_id, song_id) VALUES ($1, $2, $3)',
+      values: [id, playlistId, songId],
+    };
+
+    await this._pool.query(query);
   }
 }
 

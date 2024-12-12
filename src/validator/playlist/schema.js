@@ -5,10 +5,10 @@ const PostPlaylistPayloadSchema = Joi.object({
 });
 
 const PostSongInPlaylistSchema = Joi.object({
-  name: Joi.string().required();
+  name: Joi.string().required(),
 });
 
-module.exports = { 
+module.exports = {
   PostPlaylistPayloadSchema,
   PostSongInPlaylistSchema,
 };

@@ -15,11 +15,10 @@ class SongService {
     title, year, performer, genre, duration, albumId,
   }) {
     const id = `song-${nanoid(16)}`;
-    const album_id = albumId;
 
     const query = {
       text: 'INSERT INTO songs VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id',
-      values: [id, title, year, performer, genre, duration, album_id],
+      values: [id, title, year, performer, genre, duration, albumId],
     };
 
     const result = await this._pool.query(query);
